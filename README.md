@@ -23,11 +23,13 @@ It's still an open problem in my head how or where this could be used. But the t
 
 
 ## Steps needed to build this project:
-1. Check where to obtain data
-2. Do some TLSN hello world. Evaluate if it's an appropriate tool
-3. Create some proof generator
-4. Create some proof verifier or check if I can use the one that already exists.
-5. Deploy some app?
+- [ ] Check where to obtain data
+- [ ] Do some TLSN hello world. Evaluate if it's an appropriate tool
+- [ ] Create some proof generator
+- [ ] Create some proof verifier or check if I can use the one that already exists.
+- [ ] Deploy some app?
+
+
 
 ## Future work
 * Find use cases with this data.
