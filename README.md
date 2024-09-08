@@ -24,7 +24,7 @@ It's still an open problem in my head how or where this could be used. But the t
 
 
 ## Steps needed to build this project:
-- [ ] Check where to obtain data
+- [X] Check where to obtain data
 - [X] Do some TLSN hello world. Evaluate if it's an appropriate tool
 - [ ] Create some proof generator
 - [ ] Create some proof verifier or check if I can use the one that already exists.
@@ -44,3 +44,11 @@ Successfully verified that the bytes below came from a session with Dns("example
 Note that the bytes which the Prover chose not to disclose are shown as X.
 ```
 So it's a good option for this idea.
+
+
+In Duolingo, a get to `https://www.duolingo.com/2017-06-30/users/user_id` retrieves all the data.
+
+If the request is made without authorization some data is returned but if auth is in header we get more data, like email. Streak data is in both, so I don't know if it's needed to have the auth.
+
+The thing is I need to create a proof that the streak is mine. I can create a proof that I know a user that has some streak by sending a request without auth, but it's not as useful as saying I have access to an account that has that streak.
+
