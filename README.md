@@ -10,6 +10,7 @@ I still need to check if it's possible.
 
 One way is to manually create the proof in the browser with certain request.
 
+
 ## Motivation
 I have a running 1725 day streak on Duolingo. Whether it's the right tool for learning a language or not, it not expected to be thought now. I just enjoy a few minutes every day playing with this app and learning something. 
 
@@ -24,14 +25,22 @@ It's still an open problem in my head how or where this could be used. But the t
 
 ## Steps needed to build this project:
 - [ ] Check where to obtain data
-- [ ] Do some TLSN hello world. Evaluate if it's an appropriate tool
+- [X] Do some TLSN hello world. Evaluate if it's an appropriate tool
 - [ ] Create some proof generator
 - [ ] Create some proof verifier or check if I can use the one that already exists.
 - [ ] Deploy some app?
-
 
 
 ## Future work
 * Find use cases with this data.
 * Allow people to mint a NFT only if they have a streak bigger than X.
 * Come up with a better name.
+
+
+## Notes
+TLS Notary outputs this when creating the proof:
+```
+Successfully verified that the bytes below came from a session with Dns("example.com") at 2024-09-08 14:14:50 UTC.
+Note that the bytes which the Prover chose not to disclose are shown as X.
+```
+So it's a good option for this idea.
