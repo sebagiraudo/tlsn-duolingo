@@ -52,3 +52,7 @@ If the request is made without authorization some data is returned but if auth i
 
 The thing is I need to create a proof that the streak is mine. I can create a proof that I know a user that has some streak by sending a request without auth, but it's not as useful as saying I have access to an account that has that streak.
 
+
+The whole request is way too big for this. Fortunately, you can ask for specific fields:
+
+If we GET `https://www.duolingo.com/2017-06-30/users/{user_id}?fields=streak,email` we will get just streak and email. If no auth is provided there will be only the streak. We need to check if email is in the response so we can guarantee the user has the authorization ergo they have access to the account.
