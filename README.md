@@ -5,11 +5,11 @@ Prove that you have a x day streak on Duolingo
 Little project to learn how to use TLS Notary, trying to prove that you have certain streak on Duolingo.
 
 ## How to use it
-This project is based on the (Discord md example in TLS Notary)[https://docs.tlsnotary.org/quick_start/rust.html].
+This project is based on the [Discord md example in TLS Notary](https://docs.tlsnotary.org/quick_start/rust.html).
 
 I'm planning on improving this to be able to run it as a standalone project, but for now the best way to try it out is following these steps:
 
-1. Copy the `/duolingo` folder inside the `/examples` folder in (TLSN-quick-start project)[https://github.com/tlsnotary/tlsn.git].
+1. Copy the `/duolingo` folder inside the `/examples` folder in [TLSN-quick-start project](https://github.com/tlsnotary/tlsn.git).
 2. Add this to the `Cargo.toml` inside the examples folder:
 ```
 [[example]]
@@ -20,7 +20,7 @@ path = "duolingo/duolingo_streak.rs"
 name = "duolingo_streak_verifier"
 path = "duolingo/duolingo_streak_verifier.rs"
 ```
-3. Follow the steps as the discord example on the tlsn documentation [https://docs.tlsnotary.org/quick_start/rust.html].
+3. Follow the steps as the discord example on the [tlsn documentation](https://docs.tlsnotary.org/quick_start/rust.html).
 
 
 ## Motivation
