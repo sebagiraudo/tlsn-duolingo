@@ -106,7 +106,6 @@ async fn main() {
     let request = Request::builder()
         .uri(format!(
             "https://{SERVER_DOMAIN}/2017-06-30/users/{user_id}?fields=streak,email"
-            // "https://{SERVER_DOMAIN}/api/v9/channels/{channel_id}/messages?limit=2"
         ))
         .header("Host", SERVER_DOMAIN)
         .header("Accept", "*/*")
@@ -140,22 +139,19 @@ async fn main() {
     // Prepare for notarization
     let mut prover = prover.start_notarize();
 
-    let email = parsed["email"].as_str().unwrap();  // Extract the email
     // Identify the ranges in the transcript that contain secrets
     let (public_ranges, private_ranges) = find_ranges(
         prover.sent_transcript().data(), 
-        &[auth_token.as_bytes()]
+        &[auth_token.as_bytes(), user_id.as_bytes()]
     );
+
+    // ToDo fail if email is not found as user isn't authenticated
+    let email = parsed["email"].as_str().unwrap();
+    // Identify the ranges in the transcript that contain secrets
     let (public_ranges_recv, private_ranges_recv) = find_ranges(
         prover.recv_transcript().data(), 
         &[email.as_bytes()]
     );
-
-    println!("Public ranges: {:?}", public_ranges);
-    println!("Private ranges: {:?}", private_ranges);
-    println!("Public ranges recv: {:?}", public_ranges_recv);
-    println!("Private ranges recv: {:?}", private_ranges_recv);
-    let recv_len = prover.recv_transcript().data().len();
 
     let builder = prover.commitment_builder();
 
@@ -166,16 +162,15 @@ async fn main() {
         .map(|range| builder.commit_sent(range).unwrap())
         .collect::<Vec<_>>();
 
-    // Commit to the full received transcript xin one shot, as we don't need to redact anything
-    // commitment_ids.push(builder.commit_recv(&(0..recv_len)).unwrap());
+    // Collect commitment ids for the inbound transcript
     let mut commitment_ids_recv = public_ranges_recv
         .iter()
         .chain(private_ranges_recv.iter())
         .map(|range| builder.commit_recv(range).unwrap())
         .collect::<Vec<_>>();
 
+    // Add the commitment ids for the inbound transcript to the outbound transcript
     commitment_ids.append(&mut commitment_ids_recv);
-    println!("Commitment ids: {:?}", commitment_ids);
 
     // Finalize, returning the notarized session
     let notarized_session = prover.finalize().await.unwrap();
@@ -198,13 +193,15 @@ async fn main() {
 
     let mut proof_builder = notarized_session.data().build_substrings_proof();
 
-    // Reveal everything but the auth token (which was assigned commitment id 2)
+    // Reveal everything but the hidden parts of the transcript
+    // commitment_ids[3]: auth_token
+    // commitment_ids[4]: user_id
+    // commitment_ids[7]: email
     proof_builder.reveal_by_id(commitment_ids[0]).unwrap();
     proof_builder.reveal_by_id(commitment_ids[1]).unwrap();
-    proof_builder.reveal_by_id(commitment_ids[3]).unwrap();
-    proof_builder.reveal_by_id(commitment_ids[4]).unwrap();
-    // proof_builder.reveal_by_id(commitment_ids[4]).unwrap();
-    // proof_builder.reveal_by_id(commitment_ids[4]).unwrap();
+    proof_builder.reveal_by_id(commitment_ids[2]).unwrap();
+    proof_builder.reveal_by_id(commitment_ids[5]).unwrap();
+    proof_builder.reveal_by_id(commitment_ids[6]).unwrap(); 
 
     let substrings_proof = proof_builder.build().unwrap();
 
