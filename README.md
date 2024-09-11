@@ -1,14 +1,26 @@
 # tlsn-duolingo
 
-[IN PROGRESS]
-
 Prove that you have a x day streak on Duolingo
 
 Little project to learn how to use TLS Notary, trying to prove that you have certain streak on Duolingo.
 
-I still need to check if it's possible. 
+## How to use it
+This project is based on the (Discord md example in TLS Notary)[https://docs.tlsnotary.org/quick_start/rust.html].
 
-One way is to manually create the proof in the browser with certain request.
+I'm planning on improving this to be able to run it as a standalone project, but for now the best way to try it out is following these steps:
+
+1. Copy the `/duolingo` folder inside the `/examples` folder in (TLSN-quick-start project)[https://github.com/tlsnotary/tlsn.git].
+2. Add this to the `Cargo.toml` inside the examples folder:
+```
+[[example]]
+name = "duolingo_streak"
+path = "duolingo/duolingo_streak.rs"
+
+[[example]]
+name = "duolingo_streak_verifier"
+path = "duolingo/duolingo_streak_verifier.rs"
+```
+3. Follow the steps as the discord example on the tlsn documentation [https://docs.tlsnotary.org/quick_start/rust.html].
 
 
 ## Motivation
@@ -26,8 +38,8 @@ It's still an open problem in my head how or where this could be used. But the t
 ## Steps needed to build this project:
 - [X] Check where to obtain data
 - [X] Do some TLSN hello world. Evaluate if it's an appropriate tool
-- [ ] Create some proof generator
-- [ ] Create some proof verifier or check if I can use the one that already exists.
+- [X] Create some proof generator
+- [X] Create some proof verifier or check if I can use the one that already exists.
 - [ ] Deploy some app?
 
 
@@ -35,6 +47,7 @@ It's still an open problem in my head how or where this could be used. But the t
 * Find use cases with this data.
 * Allow people to mint a NFT only if they have a streak bigger than X.
 * Come up with a better name.
+* Think why and how it's useful, what data should remain private, how to avoid one user giving out proofs to everyone.
 
 
 ## Notes
